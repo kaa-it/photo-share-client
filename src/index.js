@@ -6,7 +6,6 @@ import * as serviceWorker from './serviceWorker';
 import { ApolloProvider } from 'react-apollo';
 import {
     InMemoryCache,
-    HttpLink,
     ApolloLink,
     ApolloClient,
     split
@@ -14,8 +13,9 @@ import {
 import { persistCache } from 'apollo-cache-persist';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
+import { createUploadLink } from 'apollo-upload-client';
 
-const httpLink = new HttpLink({ uri: 'http://akruglov-laptop:4000/graphql' })
+const httpLink = createUploadLink({ uri: 'http://akruglov-laptop:4000/graphql' })
 const wsLink = new WebSocketLink({
     uri: 'ws://akruglov-laptop:4000/graphql',
     options: { reconnect: true }

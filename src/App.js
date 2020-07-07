@@ -3,13 +3,20 @@ import Users from './Users';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { gql } from 'apollo-boost';
 import AuthorizedUser from './AuthorizedUser';
+import Photos from './Photos';
+import PostPhoto from './PostPhoto';
 import { withApollo } from 'react-apollo';
 
 export const ROOT_QUERY = gql`
     query allUsers {
       totalUsers
       allUsers { ...userInfo }
-      me { ...userInfo }  
+      me { ...userInfo }
+      allPhotos {
+          id
+          name
+          url
+      }
     }
     
     fragment userInfo on User {
@@ -80,8 +87,10 @@ class App extends Component {
                         <Fragment>
                             <AuthorizedUser/>
                             <Users/>
+                            <Photos />
                         </Fragment>
                     } />
+                    <Route path='/newPhoto' component={PostPhoto}/>
                     <Route component={({location}) => <h1>"{location.pathname}" not found</h1>} />
                 </Switch>
             </BrowserRouter>
